@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>抽獎機</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <style>
+        body{
+            font-family:微軟正黑體;
+            background-color: rgba(255, 241, 244, 0.774);
+        }
+        .container {
+            width: 500px;
+        }
+
+        #box {
+            position: relative;
+            width: 250px;
+            height: 200px;
+            margin: 0 auto;
+            background-color: rgb(63, 63, 63);
+            overflow: hidden;
+            border-radius:10px;
+        }
+
+        .boxNum {
+            display: block;
+            width: 250px;
+            position: absolute;
+            line-height: 200px;
+            text-align: center;
+            font-size: 100px;
+            left: 250px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center" class="container mt-5 mb-3">
+        <h2>抽獎機</h2>
+    </div>
+
+    <div class="container input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">最小值</span>
+        </div>
+        <input type="text" class="form-control text-right" id="min" placeholder="0" aria-label="Username"
+            aria-describedby="basic-addon1">
+        <div class="input-group-prepend">
+            <span class="input-group-text ml-2" id="basic-addon1">最大值</span>
+        </div>
+        <input type="text" class="form-control text-right" id="max" placeholder="0" aria-label="Username"
+            aria-describedby="basic-addon1">
+    </div>
+
+    <div id="box">
+        <h1 class="boxNum">123</h1>
+        <h1 class="boxNum"></h1>
+        <h1 class="boxNum"></h1>
+    </div>
+
+    <div align="center" class="container mt-3">
+        <button id="pick" type="button" class="btn btn-outline-dark">抽獎 !</button>
+        <div id="answer" class="mt-3">已抽過 : </div>
+    </div>
+
+    <script src="jquery-3.3.1.min.js"></script>
+    <script>
+        $(function () {
+            var close = 0;  //0為開1為關
+            var numList;   //數字範圍
+            var num;   //抽到的數字
+            var randomList;   //一組亂數
+
+            $("#pick").on('click', go);
+
+            function go() {
+                if (close == 0) {
+                    set();
+                    close = 1;
+                } 
+                roll();
+                j = 0; n = 0;
+                //判斷陣列的數字是否抽完
+                if (numList.length > 0) {
+                    pick();
+                }
+                
+                console.log(numList);
+            }
+
+            //設定範圍值
+            function set() {
+                var min = parseInt($("#min").val());
+                var max = parseInt($("#max").val());
+                var count = 0;
+                //把範圍的值放入陣列numList
+                numList = new Array(max - min + 1);
+                for (var i = min; i <= max; i++) {
+                    numList[count] = i;
+                    count++;
+                }
+            }
+
+            //抽數字
+            function pick() {
+                //亂數取陣列的位置
+                var numIndex = Math.floor(Math.random() * numList.length);
+                //得到抽獎的號碼 
+                num = numList[numIndex];
+                console.log(num);
+
+                //亂數陣列存動畫
+                randomList = new Array(10);
+                for (var i = 0; i < 9; i++) {
+                    var numIndexx = Math.floor(Math.random() * numList.length);
+                    var randomNum = numList[numIndexx];
+                    randomList[i] = randomNum;
+                }
+                randomList[9] = num;
+                console.warn(randomList);
+
+                //刪除被抽到的數字
+                numList.splice(numIndex, 1);
+            }
+
+            var n = 0, j = 0;
+            function roll() {
+                var a = setInterval(function () {
+                    $($('.boxNum')[n % 3]).text(randomList[j]);
+                    //$($('.boxNum')[n % 3]).finish();
+                    $($('.boxNum')[n % 3]).css("left", "250px");
+                    $($('.boxNum')[n % 3]).animate({ left: "-250px" }, 700, "linear");
+                    n++;
+                    j++;
+                    //跑到第10個數字時候數字會停在正中間並結束動畫
+                    if(j==9){
+                        $($('.boxNum')[n % 3]).text(randomList[9]);
+                        $($('.boxNum')[n % 3]).css("left", "250px");
+                        $($('.boxNum')[n % 3]).animate({ left: "0px" }, 1400, "linear");
+                        clearInterval(a);        
+                        //設定歷史紀錄讓他晚點出現                
+                        setTimeout(function(){$("#answer")[0].innerHTML += " " + num;},2000);
+                    }
+                }, 700);
+            };
+
+        })
+    </script>
+</body>
+
+</html>
