@@ -12,17 +12,14 @@
         body {
             font-family: 微軟正黑體;
             background-color: rgba(255, 241, 244, 0.774);
+            /* background: url(./dumplings.jpg) */
         }
 
         .container {
             width: 600px;            
         }        
 
-        #bigImages {
-            display: table;
-        }
-
-        #bigImage {    /*------*/
+        #bigImage {
             display: table;
         }
 
@@ -30,58 +27,11 @@
             display: table-row;
         }
 
-        .puzzles1 , .puzzles2 , .puzzles3 , .puzzles4 , .puzzles5 , 
-        .puzzles6 , .puzzles7 , .puzzles8 , .puzzles9{
-            display: table-cell;
-            display: none;
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
-            border: 2px solid white;            
-            cursor:pointer;   /*鼠標*/
-        }
-        .puzzles1{
-            background: white;
-            cursor: default;
-        }
-        .puzzles2{
-            background-position: center top;
-        }
-        .puzzles3{
-            background-position: right top;
-        }
-        .puzzles4{
-            background-position: left center;
-        }
-        .puzzles5{
-            background-position: center center;
-        }
-        .puzzles6{
-            background-position: right center;
-        }
-        .puzzles7{
-            background-position: left bottom;
-        }
-        .puzzles8{
-            background-position: center bottom;
-        }
-        .puzzles9{
-            background-position: right bottom;
-        }
-
-        #smallPics{
-            background: url(./dumplingss.jpg);
-            width: 188px;
-            height: 188px;
-        }
-
-        /*----*/
         .puzzle1 , .puzzle2 , .puzzle3 , .puzzle4 , .puzzle5 , 
         .puzzle6 , .puzzle7 , .puzzle8 , .puzzle9, .puzzle10,
         .puzzle11 , .puzzle12 , .puzzle13 , .puzzle14 , .puzzle15,
-        .puzzle16{            
+        .puzzle16{
             display: table-cell;
-            /* display: none; */
             width: 150px;
             height: 150px;
             background: url(./dumplings.jpg);
@@ -143,13 +93,6 @@
             width: 188px;
             height: 188px;
         }
-
-        .container1{
-            display: none;
-        }
-        .container2{
-            /* display:none; */
-        }
     </style>
 </head>
 
@@ -157,34 +100,8 @@
 
     <div align="center" class="container mt-3 mb-3">
         <h2>Puzzle</h2>
-        <button id="xxx" type="button" class="btn btn-outline-dark mb-1">4*4 Open !</button>
-        <button id="ooo" type="button" class="btn btn-outline-dark mb-1">3*3 Open !</button>
     </div>
 
-    <div id="bigImages" class="container container1">
-        <div id="row1" class="row">
-            <div class="puzzles1" id="puzzles11" onclick="clickPuzzles(1,1)"></div>
-            <div class="puzzles2" id="puzzles12" onclick="clickPuzzles(1,2)"></div>
-            <div class="puzzles3" id="puzzles13" onclick="clickPuzzles(1,3)"></div>
-        </div>
-        <div id="row2" class="row">
-            <div class="puzzles4" id="puzzles21" onclick="clickPuzzles(2,1)"></div>
-            <div class="puzzles5" id="puzzles22" onclick="clickPuzzles(2,2)"></div>
-            <div class="puzzles6" id="puzzles23" onclick="clickPuzzles(2,3)"></div>
-        </div>
-        <div id="row3" class="row">
-            <div class="puzzles7" id="puzzles31" onclick="clickPuzzles(3,1)"></div>
-            <div class="puzzles8" id="puzzles32" onclick="clickPuzzles(3,2)"></div>
-            <div class="puzzles9" id="puzzles33" onclick="clickPuzzles(3,3)"></div>
-        </div>
-    </div>
-
-    <div align="center" class="container container1 mt-3">
-        <button id="freshsss" type="button" class="btn btn-outline-dark mb-1">Fresh !</button>
-        <div id="smallPics"></div>
-    </div>
-
-    <!---->
     <div id="bigImage" class="container container2">
         <div id="row1" class="row">
             <div class="puzzle1" id="puzzle11" onclick="clickPuzzle(1,1)"></div>
@@ -217,93 +134,8 @@
         <div id="smallPic"></div>
     </div>
 
-
     <script src="jquery-3.3.1.min.js"></script>
     <script>
-        $("#xxx").on('click',open4);
-        function open4(){
-            $(".container1").css("display","none");
-            $(".container2").css("display","table");
-        }
-        $("#ooo").on('click',open3);
-        function open3(){
-            $(".puzzles1 , .puzzles2 , .puzzles3 , .puzzles4 , .puzzles5 , .puzzles6 , .puzzles7 , .puzzles8 , .puzzles9").css("display","table-cell");
-            $(".container1").css("display","table");
-            $(".container2").css("display","none");
-        }
-
-        $("#freshsss").on('click',freshsss);
-        //弄亂puzzles
-        function freshsss(){
-            for(var row = 1; row <= 3; row++){
-                for(var column = 1 ; column <= 3; column++){
-                    var row2 = Math.floor(Math.random() * 3 + 1);
-                    var column2 = Math.floor(Math.random() * 3 + 1);
-                    changes("puzzles" + row + column , "puzzles" + row2 + column2);
-                }
-            }
-        }           
-        
-        //點擊圖片puzzle(x,x)
-        function clickPuzzles(row,column){
-            var puzzleId = document.getElementById("puzzles" + row + column);
-            var puzzleClass = puzzleId.className;
-                
-            //puzzle1是空白的css
-            if(puzzleClass != "puzzles1"){
-                if(column < 3){
-                    if(document.getElementById("puzzles" + row + (column + 1)).className == "puzzles1"){
-                        changes("puzzles" + row + column , "puzzles" + row +(column + 1));
-                        console.log("右");
-                    }
-                }
-                if(column > 1){
-                    if(document.getElementById("puzzles" + row + (column - 1)).className == "puzzles1"){
-                       changes("puzzles" + row + column , "puzzles" + row +(column - 1));
-                       console.log("左")
-                    }
-                }
-                if(row < 3){
-                    if(document.getElementById("puzzles" + (row + 1) + column).className == "puzzles1"){
-                        changes("puzzles" + row + column , "puzzles" + (row + 1) + column);
-                        console.log("下")
-                    }
-                }
-                if(row > 1){
-                    if(document.getElementById("puzzles" + (row - 1) + column).className == "puzzles1"){
-                        changes("puzzles" + row + column , "puzzles" + (row - 1) + column);
-                        console.log("上")
-                    }
-                }             
-            }wins();
-        }  
-
-        //交換兩張圖片位置
-        function changes(a,b){       //直接寫idName,idName
-            var storage = $('#' + a).attr('class');
-            $('#' + a).attr('class' , $('#' + b).attr('class'));  //逗號後面是寫更換的className  ex.$('#div1').attr('class','E H');
-            $('#' + b).attr('class' , storage);
-        }
-
-        function wins(){
-            setTimeout(() => {                
-                if(document.getElementById("puzzles11").className == "puzzles1" &&
-                document.getElementById("puzzles12").className == "puzzles2" &&
-                document.getElementById("puzzles13").className == "puzzles3" &&
-                document.getElementById("puzzles21").className == "puzzles4" &&
-                document.getElementById("puzzles22").className == "puzzles5" &&
-                document.getElementById("puzzles23").className == "puzzles6" &&
-                document.getElementById("puzzles31").className == "puzzles7" &&
-                document.getElementById("puzzles32").className == "puzzles8" &&
-                document.getElementById("puzzles33").className == "puzzles9"
-                ){
-                   alert("FINSISH !");
-                }
-            }, 1000);
-        }
-
-
-
         $("#fresh").on('click',fresh);
         //弄亂puzzles
         function fresh(){
