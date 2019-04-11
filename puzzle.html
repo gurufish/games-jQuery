@@ -16,9 +16,8 @@
         }
 
         .container {
-            width: 600px;
-            
-        }
+            width: 600px;            
+        }        
 
         #bigImage {
             display: table;
@@ -31,6 +30,7 @@
         .puzzle1 , .puzzle2 , .puzzle3 , .puzzle4 , .puzzle5 , 
         .puzzle6 , .puzzle7 , .puzzle8 , .puzzle9{
             display: table-cell;
+            /* display: none; */
             width: 200px;
             height: 200px;
             background: url(./dumplings.jpg);
@@ -76,11 +76,11 @@
 
 <body>
 
-    <div align="center" class="container mt-3 mb-3">
+    <div align="center" class="container container1 mt-3 mb-3">
         <h2>Puzzle</h2>
     </div>
 
-    <div id="bigImage" class="container">
+    <div id="bigImage" class="container container1">
         <div id="row1" class="row">
             <div class="puzzle1" id="puzzle11" onclick="clickPuzzle(1,1)"></div>
             <div class="puzzle2" id="puzzle12" onclick="clickPuzzle(1,2)"></div>
@@ -98,15 +98,25 @@
         </div>
     </div>
 
-    <div align="center" class="container mt-3">
+    <div align="center" class="container container1 mt-3">
         <button id="fresh" type="button" class="btn btn-outline-dark mb-1">Fresh !</button>
         <div id="smallPic"></div>
     </div>
 
-
+    <!-- <button id="xxx" type="button" class="btn btn-outline-dark mb-1">3*3 !</button>
+    <button id="ooo" type="button" class="btn btn-outline-dark mb-1">3*3 Open !</button> -->
 
     <script src="jquery-3.3.1.min.js"></script>
     <script>
+        // $("#xxx").on('click',close3);
+        // function close3(){
+        //     $(".container1").css("display","none");
+        // }
+        // $("#ooo").on('click',open3);
+        // function open3(){
+        //     $(".container1").css("display","table");
+        // }
+
         $("#fresh").on('click',fresh);
         //弄亂puzzles
         function fresh(){
@@ -129,7 +139,7 @@
                 if(column < 3){
                     if(document.getElementById("puzzle" + row + (column + 1)).className == "puzzle1"){
                         change("puzzle" + row + column , "puzzle" + row +(column + 1));
-                        console.log("右")
+                        console.log("右");
                     }
                 }
                 if(column > 1){
@@ -149,8 +159,8 @@
                         change("puzzle" + row + column , "puzzle" + (row - 1) + column);
                         console.log("上")
                     }
-                }
-            }
+                }             
+            }win();
         }  
 
         //交換兩張圖片位置
@@ -158,6 +168,23 @@
             var storage = $('#' + a).attr('class');
             $('#' + a).attr('class' , $('#' + b).attr('class'));  //逗號後面是寫更換的className  ex.$('#div1').attr('class','E H');
             $('#' + b).attr('class' , storage);
+        }
+
+        function win(){
+            setTimeout(() => {                
+                if(document.getElementById("puzzle11").className == "puzzle1" &&
+                document.getElementById("puzzle12").className == "puzzle2" &&
+                document.getElementById("puzzle13").className == "puzzle3" &&
+                document.getElementById("puzzle21").className == "puzzle4" &&
+                document.getElementById("puzzle22").className == "puzzle5" &&
+                document.getElementById("puzzle23").className == "puzzle6" &&
+                document.getElementById("puzzle31").className == "puzzle7" &&
+                document.getElementById("puzzle32").className == "puzzle8" &&
+                document.getElementById("puzzle33").className == "puzzle9"
+                ){
+                   alert("FINSISH !");
+                }
+            }, 1000);
         }
     </script>
 </body>
