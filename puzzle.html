@@ -28,75 +28,41 @@
             display: table-row;
         }
 
-        .puzzle {
+        .puzzle1 , .puzzle2 , .puzzle3 , .puzzle4 , .puzzle5 , 
+        .puzzle6 , .puzzle7 , .puzzle8 , .puzzle9{
             display: table-cell;
             width: 200px;
             height: 200px;
+            background: url(./dumplings.jpg);
             border: 2px solid white;            
             cursor:pointer;   /*鼠標*/
         }
-
-        #puzzle1{
-            width: 200px;
-            height: 200px;
+        .puzzle1{
             background: white;
-            /* background-position: left top; */
             cursor: default;
         }
-
-        #puzzle2{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle2{
             background-position: center top;
         }
-
-        #puzzle3{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle3{
             background-position: right top;
         }
-
-        #puzzle4{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle4{
             background-position: left center;
         }
-
-        #puzzle5{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle5{
             background-position: center center;
         }
-
-        #puzzle6{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle6{
             background-position: right center;
         }
-
-        #puzzle7{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle7{
             background-position: left bottom;
         }
-
-        #puzzle8{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle8{
             background-position: center bottom;
         }
-
-        #puzzle9{
-            width: 200px;
-            height: 200px;
-            background: url(./dumplings.jpg);
+        .puzzle9{
             background-position: right bottom;
         }
 
@@ -116,24 +82,24 @@
 
     <div id="bigImage" class="container">
         <div id="row1" class="row">
-            <div id="puzzle1" class="puzzle"></div>
-            <div id="puzzle2" class="puzzle"></div>
-            <div id="puzzle3" class="puzzle"></div>
+            <div class="puzzle1" id="puzzle11" onclick="clickPuzzle(1,1)"></div>
+            <div class="puzzle2" id="puzzle12" onclick="clickPuzzle(1,2)"></div>
+            <div class="puzzle3" id="puzzle13" onclick="clickPuzzle(1,3)"></div>
         </div>
         <div id="row2" class="row">
-            <div id="puzzle4" class="puzzle"></div>
-            <div id="puzzle5" class="puzzle"></div>
-            <div id="puzzle6" class="puzzle"></div>
+            <div class="puzzle4" id="puzzle21" onclick="clickPuzzle(2,1)"></div>
+            <div class="puzzle5" id="puzzle22" onclick="clickPuzzle(2,2)"></div>
+            <div class="puzzle6" id="puzzle23" onclick="clickPuzzle(2,3)"></div>
         </div>
         <div id="row3" class="row">
-            <div id="puzzle7" class="puzzle"></div>
-            <div id="puzzle8" class="puzzle"></div>
-            <div id="puzzle9" class="puzzle"></div>
+            <div class="puzzle7" id="puzzle31" onclick="clickPuzzle(3,1)"></div>
+            <div class="puzzle8" id="puzzle32" onclick="clickPuzzle(3,2)"></div>
+            <div class="puzzle9" id="puzzle33" onclick="clickPuzzle(3,3)"></div>
         </div>
     </div>
 
     <div align="center" class="container mt-3">
-        <button id="pick" type="button" class="btn btn-outline-dark mb-1">Fresh !</button>
+        <button id="fresh" type="button" class="btn btn-outline-dark mb-1">Fresh !</button>
         <div id="smallPic"></div>
     </div>
 
@@ -141,7 +107,58 @@
 
     <script src="jquery-3.3.1.min.js"></script>
     <script>
+        $("#fresh").on('click',fresh);
+        //弄亂puzzles
+        function fresh(){
+            for(var row = 1; row <= 3; row++){
+                for(var column = 1 ; column <= 3; column++){
+                    var row2 = Math.floor(Math.random() * 3 + 1);
+                    var column2 = Math.floor(Math.random() * 3 + 1);
+                    change("puzzle" + row + column , "puzzle" + row2 + column2);
+                }
+            }
+        }           
+        
+        //點擊圖片puzzle(x,x)
+        function clickPuzzle(row,column){
+            var puzzleId = document.getElementById("puzzle" + row + column);
+            var puzzleClass = puzzleId.className;
+                
+            //puzzle1是空白的css
+            if(puzzleClass != "puzzle1"){
+                if(column < 3){
+                    if(document.getElementById("puzzle" + row + (column + 1)).className == "puzzle1"){
+                        change("puzzle" + row + column , "puzzle" + row +(column + 1));
+                        console.log("右")
+                    }
+                }
+                if(column > 1){
+                    if(document.getElementById("puzzle" + row + (column - 1)).className == "puzzle1"){
+                       change("puzzle" + row + column , "puzzle" + row +(column - 1));
+                       console.log("左")
+                    }
+                }
+                if(row < 3){
+                    if(document.getElementById("puzzle" + (row + 1) + column).className == "puzzle1"){
+                        change("puzzle" + row + column , "puzzle" + (row + 1) + column);
+                        console.log("下")
+                    }
+                }
+                if(row > 1){
+                    if(document.getElementById("puzzle" + (row - 1) + column).className == "puzzle1"){
+                        change("puzzle" + row + column , "puzzle" + (row - 1) + column);
+                        console.log("上")
+                    }
+                }
+            }
+        }  
 
+        //交換兩張圖片位置
+        function change(a,b){       //直接寫idName,idName
+            var storage = $('#' + a).attr('class');
+            $('#' + a).attr('class' , $('#' + b).attr('class'));  //逗號後面是寫更換的className  ex.$('#div1').attr('class','E H');
+            $('#' + b).attr('class' , storage);
+        }
     </script>
 </body>
 
