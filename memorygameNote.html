@@ -87,20 +87,27 @@
     
     <script src="jquery-3.3.1.min.js"></script>
     <script>
-        var randomList = [];   
-        var arrayList = [];    
+        var randomList = [];   //存陣列確認8張撲克牌不可重複
+        var arrayList = [];    //記住每張card的順序
 
         $('#start').on('click',start);
         function start(){
             randomList = [];
             arrayList = [];
 
+            //存card1~8的順序
             for(var o = 0 ; o < 8 ; o++){
                 arrayList[o] = o + 1;
                 arrayList[o + 8] = o + 1
             }
             arrayList.sort(randomSort);
 
+            //放card1~8在4*4
+            for(var j = 0; j < 16; j++){               
+                // $('#card' + j).attr('class', 'card' + arrayList[j]);                
+            }
+
+            //設定card1~8分別是哪八張撲克牌
             var i = 0;
             while (randomList.length < 8) {
                 var pickcard = Math.floor(Math.random() * 52) + 1;
@@ -109,17 +116,24 @@
                     i++;
                 }
             }
+            // randomList = randomList + "," + randomList;
+            // randomList = randomList.split(',');
+            console.warn("array:"+arrayList)//數字代表下面的第幾位
+            console.log("random:"+randomList)//數字代表圖檔名
         }
 
         var count = 0;
         var first;
-        function clickCard(a){            
+        function clickCard(a){
+            
             $('#card' + a).removeClass('card');
             $('#card' + a).addClass('card' + arrayList[a]);
             $(".card" + arrayList[a]).css('background-image', 'url(./images/' + randomList[arrayList[a]-1] + '.gif)');
             if(a != first){
                 count++;
             }
+            
+            console.log("Count:"+count);
             if(count == 1){
                 first = a;
             }
@@ -138,6 +152,8 @@
                     count = 0;
                 }
             }
+            
+            console.warn("First:" + first)
         }
         
         function reset() {
