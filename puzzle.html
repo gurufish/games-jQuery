@@ -233,7 +233,6 @@
         }
 
         $("#freshsss").on('click',freshsss);
-        //弄亂puzzles
         function freshsss(){
             for(var row = 1; row <= 3; row++){
                 for(var column = 1 ; column <= 3; column++){
@@ -244,12 +243,10 @@
             }
         }           
         
-        //點擊圖片puzzle(x,x)
         function clickPuzzles(row,column){
             var puzzleId = document.getElementById("puzzles" + row + column);
             var puzzleClass = puzzleId.className;
-                
-            //puzzle1是空白的css
+             
             if(puzzleClass != "puzzles1"){
                 if(column < 3){
                     if(document.getElementById("puzzles" + row + (column + 1)).className == "puzzles1"){
@@ -278,10 +275,10 @@
             }wins();
         }  
 
-        //交換兩張圖片位置
-        function changes(a,b){       //直接寫idName,idName
+        
+        function changes(a,b){      
             var storage = $('#' + a).attr('class');
-            $('#' + a).attr('class' , $('#' + b).attr('class'));  //逗號後面是寫更換的className  ex.$('#div1').attr('class','E H');
+            $('#' + a).attr('class' , $('#' + b).attr('class'));  
             $('#' + b).attr('class' , storage);
         }
 
@@ -305,7 +302,6 @@
 
 
         $("#fresh").on('click',fresh);
-        //弄亂puzzles
         function fresh(){
             for(var row = 1; row <= 4; row++){
                 for(var column = 1 ; column <= 4; column++){
@@ -316,12 +312,10 @@
             }
         }           
         
-        //點擊圖片puzzle(x,x)
         function clickPuzzle(row,column){
             var puzzleId = document.getElementById("puzzle" + row + column);
             var puzzleClass = puzzleId.className;
                 
-            //puzzle1是空白的css
             if(puzzleClass != "puzzle1"){
                 if(column < 4){
                     if(document.getElementById("puzzle" + row + (column + 1)).className == "puzzle1"){
@@ -349,11 +343,10 @@
                 }             
             }win();
         }  
-
-        //交換兩張圖片位置
-        function change(a,b){       //直接寫idName,idName
+    
+        function change(a,b){       
             var storage = $('#' + a).attr('class');
-            $('#' + a).attr('class' , $('#' + b).attr('class'));  //逗號後面是寫更換的className  ex.$('#div1').attr('class','E H');
+            $('#' + a).attr('class' , $('#' + b).attr('class'));  
             $('#' + b).attr('class' , storage);
         }
 
