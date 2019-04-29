@@ -226,6 +226,7 @@
             }
             var money = $('#wallet').val() - 0;
             $('#wallet').val(money + count * 200);
+            count = 0;
         });
 
         function forwardBrick() {
@@ -294,7 +295,7 @@
             var bet = parseInt(document.getElementsByClassName("bet")[index].value);
             var money = $('#wallet').val();
             if (money <= 0) {
-                alert("8888 ~ 不送");
+                alert("沒錢~~");
             }
             else {
                 count++;
@@ -310,6 +311,7 @@
                 document.getElementsByClassName("bet")[index].value = bet;
             }            
         }
+
         function earn() {
             var moneyy = $('#wallet').val()-0;
             var bonuss = $('#bonus').val()-0;
